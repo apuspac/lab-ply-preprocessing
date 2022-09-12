@@ -11,6 +11,15 @@ LiDAR計測などしたときにエラーで計測できなかった点が出て
 ./preproces --in "ply_file.ply" --property_num 9 --radius 3.0
 ```
 
+
+windowsで動かすと 改行が悪さしてるぽいので、
+```bash
+sed -i 's/\r//' *.sh
+```
+
+で改行コードを置換する処理が必要。
+
+
 ## option
 - -h, --help  
 helpが出る。
@@ -51,13 +60,3 @@ arg3 = yのプラス範囲
 arg4 = yのマイナス範囲
 
 ![](img/rec.svg)
-
-
----
-
-windowsで動かすと 改行が悪さしてるぽいので、
-```bash
-sed -i 's/\r//' *.sh
-```
-
-で改行コードを置換する処理が必要。
