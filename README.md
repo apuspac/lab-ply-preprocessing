@@ -50,7 +50,7 @@ arg2 = xのマイナス範囲
 arg3 = yのプラス範囲
 arg4 = yのマイナス範囲
 
-[](img/rec.svg)
+![](img/rec.svg)
 
 
 ---
