@@ -30,7 +30,7 @@ usage() {
     echo "  -o, --out [ARG]     output filename"
     echo "  -p, --property_num [ARG] plyfile property num"
     echo "  -ra, --radius [ARG] Circle radius to remove points (float)"
-    echo "  -re, --rectangle [ARG1] [ARG2] [ARG3] [ARG4] length of rectangle to remove points (float), positive_x, negative_x, positive_y, negative_y, from the center of the rectangle "
+    echo "  -re, --rectangle [ARG1] [ARG2] [ARG3] [ARG4] length of rectangle to remove points (float), plus_x, minus_x, plus_y, minus_y, from the center of the rectangle "
     exit 1
 }
 
