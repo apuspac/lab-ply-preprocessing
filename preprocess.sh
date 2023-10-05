@@ -223,6 +223,8 @@ sed -i -e ""$elements_line"i  element vertex "$elements_vertex"" $output_file
 
 rm elements_vertex_tmp
 
+sed 's/0\.000000//g' $input_file > $output_file
+
 exit $?
 
 
