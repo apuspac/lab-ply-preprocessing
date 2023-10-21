@@ -189,7 +189,7 @@ BEGIN{
 {
     if(NF == property_number){
         if(is_fit_in_range($1, $2)){
-            print $0
+            print $1, "", $2, "", $3
             elements++
         }else{
             next
@@ -200,7 +200,17 @@ BEGIN{
             elements_line = NR
         }
         else{
-            print $0
+            if($1 == "property" && $2 == "float"){
+                if($3 == "x" || $3 == "y" || $3 == "z"){
+                    print $0
+                }
+                else{
+                    next
+                }
+            }
+            else{
+                print $0
+            }
         }
     }
 }
@@ -223,7 +233,9 @@ sed -i -e ""$elements_line"i  element vertex "$elements_vertex"" $output_file
 
 rm elements_vertex_tmp
 
-sed 's/0\.000000//g' $input_file > $output_file
+# sed 's/0\.000000//g' $output_file > $output_file
+# sed 's/0\.000000//g' $output_file > temp_file && mv temp_file $output_file
+
 
 exit $?
 
