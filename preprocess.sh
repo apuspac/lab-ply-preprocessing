@@ -9,6 +9,8 @@ https://qiita.com/zayarwinttun/items/0dae4cb66d8f4bd2a337
 オプション処理について
 https://qiita.com/b4b4r07/items/dcd6be0bb9c9185475bb#%E3%81%84%E3%81%A3%E3%81%9D%E8%87%AA%E5%89%8D%E3%81%A7%E8%A7%A3%E6%9E%90%E3%81%97%E3%81%A1%E3%82%83%E3%81%86
 
+print $1, "", $2, "", $3
+
 
 COMMENTOUT
 
