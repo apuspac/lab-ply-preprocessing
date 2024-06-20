@@ -1,30 +1,30 @@
 # plyファイルのエラー点を除去する
 
-LiDARで点群を計測すると計測できなかったエラー点が残るため、除去する。
+LiDARなどで計測した点群のエラー点を除去するためのプログラム
 
-プロパティの個数 9個のplyファイルで
-半径3.0m以内の点を残す場合は、
+中心から半径3.0m以内の点を残す場合は、
 ```
-./preproces --in "ply_file.ply" --property_num 9 --radius 3.0
+./preprocess.sh --input "ply_file.ply"  --radius 3.0
 ```
 
-
-NOTE: windowsで動かすと 改行が悪さしてるぽいので、改行コードを置換する処理が必要。
+property_numがいらないよう改善
+NOTE: windowsで動かすと 改行が悪さしてるぽいので、以下で改行コードを置換する
 ```bash
 sed -i 's/\r//' *.sh
 ```
 
 
-
 ## option
 - -h, --help  
-- -i, --file [ARG]  
+- -i, --input [ARG]  
 input filenameを指定。
-- -o, --out [ARG]  
+- -o, --output [ARG]  
 output filenameを指定。デフォルトはoutput.ply
 - -p, --property_num [ARG]  
-plyファイルのオプションの数を指定。デフォルトは4
-plyファイルのheaderにあるpropertyの個数を指定
+plyファイルのオプションの数を指定。
+plyファイルのheaderにあるpropertyの個数を指定して判別する用だった。  
+>> これは自動で数えるように変更。  
+>> というかxyzはたいてい最初なので、この処理はいらなかった。
 ```
 ply  
 format ascii 1.0  
@@ -48,7 +48,8 @@ end_header
  x,yの値からしか距離計算をしておらず、z(高さ)は考慮していない。
 
 - -re, --rectangle [ARG1] [ARG2] [ARG3] [ARG4]  
-原点からの矩形範囲を指定する。  
+原点から矩形範囲を指定する。画像参照  
+こちらも高さは計算していない。
 arg1 = xのプラス範囲  
 arg2 = xのマイナス範囲  
 arg3 = yのプラス範囲  

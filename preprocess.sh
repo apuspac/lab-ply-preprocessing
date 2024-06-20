@@ -26,16 +26,15 @@ usage() {
     echo "Usage: $PROGNAME [OPTION]..."
     echo "Options:"
     echo "  -h, --help          print help and exit"
-    echo "      --version       print version and exit"
-    echo "  -i, --in [ARG]    input filename"
-    echo "  -o, --out [ARG]     output filename"
-    echo "  -p, --property_num [ARG] plyfile property num"
+    echo "  -i, --input [ARG]    input filename"
+    echo "  -o, --output [ARG]     output filename. default 'output.ply'"
+    echo "  -p, --property_num [ARG] plyfile property num. default 4"
     echo "  -ra, --radius [ARG] Circle radius to remove points (float)"
     echo "  -re, --rectangle [ARG1] [ARG2] [ARG3] [ARG4] length of rectangle to remove points (float), plus_x, minus_x, plus_y, minus_y, from the center of the rectangle "
     exit 1
 }
 
-# デフォルト処理 もとから必要なものには最初に入れておく
+# default値
 output_file="output.ply"
 radius_range=3.0
 method_FLAG=1
@@ -58,7 +57,7 @@ do
             echo $VERSION
             exit 1
             ;;
-        -i | --in)
+        -i | --input)
         # 第二引数が emptyもしくは 次のオプションになっていないか
             if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
                 echo "$PROGNAME: option requires an argument about input ply_filename -- $1" 1>&2
@@ -67,7 +66,7 @@ do
             input_file=$2
             shift 2
             ;;
-        -o | --out)
+        -o | --output)
             if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
                 echo "$PROGNAME: option requires an argument about output ply_filename -- $1" 1>&2
                 exit 1
@@ -129,12 +128,12 @@ fi
 
 echo "
 inputfile ${input_file}
-outputfile ${output_file}
-radius ${radius_range}
-rectangle ${rect_negative_x} ${rect_positive_x} ${rect_negative_y} ${rect_positive_y}
-radius=1, rectangle=0 ${method_FLAG}"
-
-
+outputfile ${output_file}"
+if [ $method_FLAG -eq 1 ]; then
+    echo "radius ${radius_range}"
+else
+    echo "rectangle ${rect_negative_x} ${rect_positive_x} ${rect_negative_y} ${rect_positive_y}"
+fi
 
 # ここから下まで awk
 awk -v property_number=${property_num} -v accept_range=${radius_range}  -v rectangle_nx=${rect_negative_x} -v rectangle_px=${rect_positive_x} -v rectangle_ny=${rect_negative_y} -v rectangle_py=${rect_positive_y} -v method_flag=${method_FLAG} '
@@ -185,33 +184,46 @@ function is_fit_in_range(x, y)
 BEGIN{
     elements = 0
     elements_line = 0
-    OFS = " "
+    property_num_count = 0
 }
 
 {
-    if(NF == property_number){
-        if(is_fit_in_range($1, $2)){
-            print $1, $2, $3
-            elements++
-        }else{
-            next
+    if ($1 + 0 == $1) {
+        # 数値の場合
+        if(NF == property_number){
+            if(is_fit_in_range($1, $2)){
+                print $1, $2, $3
+                elements++
+            }else{
+                next
+            }
         }
-    }else{
+    } else {
+        # 文字列の場合
         # element vertex の行番号を保存
         if($1 == "element" && $2 == "vertex"){
             elements_line = NR
         }
         else{
-            if($1 == "property" && $2 == "float"){
-                if($3 == "x" || $3 == "y" || $3 == "z"){
-                    print $0
-                }
-                else{
-                    next
-                }
+            if($1 == "end_header"){
+                print $0
+                property_number = property_num_count
             }
             else{
-                print $0
+                if($1 == "property"){
+                    property_num_count++
+                    if($2 == "float"){
+                        if($3 == "x" || $3 == "y" || $3 == "z"){
+                            print $0
+                        }
+                        else{
+                            next
+                        }
+                    }
+                }
+                else{
+                    print $0
+                }
             }
         }
     }
