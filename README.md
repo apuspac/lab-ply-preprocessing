@@ -23,8 +23,8 @@ output filenameを指定。デフォルトはoutput.ply
 - -p, --property_num [ARG]  
 plyファイルのオプションの数を指定。
 plyファイルのheaderにあるpropertyの個数を指定して判別する用だった。  
->> これは自動で数えるように変更。  
->> というかxyzはたいてい最初なので、この処理はいらなかった。
+> これは自動で数えるように変更。  
+> というかxyzはたいてい最初なので、この処理はいらなかった。
 ```
 ply  
 format ascii 1.0  
