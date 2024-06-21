@@ -9,11 +9,6 @@ https://qiita.com/zayarwinttun/items/0dae4cb66d8f4bd2a337
 オプション処理について
 https://qiita.com/b4b4r07/items/dcd6be0bb9c9185475bb#%E3%81%84%E3%81%A3%E3%81%9D%E8%87%AA%E5%89%8D%E3%81%A7%E8%A7%A3%E6%9E%90%E3%81%97%E3%81%A1%E3%82%83%E3%81%86
 
-<<<<<<< HEAD
-print $1, "", $2, "", $3
-
-=======
->>>>>>> c4b3ae4 (first)
 
 COMMENTOUT
 
@@ -255,48 +250,5 @@ rm elements_vertex_tmp
 
 
 exit $?
-
-
-# awkからシェルスクリプトへ変数として渡したいので、setコマンドを使ってみる
-
-# BEGIN{
-#     property_number = 9
-#     accept_range = 3.0
-#     file_name = "500mm-2nd-600.ply"
-
-
-#     # check vertex number in accept_range
-#     elements = 0
-
-#     while((getline < file_name) > 0){
-#         if(NF == property_number){
-#             if(is_fit_in_range($1, $2)){
-#                 elements++
-#             }
-#         }
-#     }close(file_name)
-
-# }
-
-# {
-
-
-#     if(NF == property_number){
-#         if(is_fit_in_range($1, $2)){
-#             print $0
-#         }else{
-#             next
-#         }
-#     }else{
-#         # change vertex elements
-#         if($1 == "element" && $2 == "vertex"){
-#             print $1, $2, elements
-#         }
-#         else{
-#             print $0
-#         }
-#     }
-# }
-
 
 '
