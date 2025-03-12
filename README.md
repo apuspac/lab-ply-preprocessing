@@ -1,6 +1,6 @@
-# ply ファイルのエラー点を除去する
+# plyファイル 前処理
 
-LiDAR などで計測した点群のエラー点を除去するためのプログラム
+LiDAR などで計測した点群のエラー点, outlierを除去するためのプログラム
 
 中心から半径 3.0m 以内の点を残す場合は、
 
@@ -8,7 +8,6 @@ LiDAR などで計測した点群のエラー点を除去するためのプロ�
 ./preprocess.sh --input "ply_file.ply"  --radius 3.0
 ```
 
-property_num がいらないよう改善
 NOTE: windows で動かすと 改行が悪さしてるぽいので、以下で改行コードを置換する
 
 ```bash
@@ -58,4 +57,8 @@ end_header
   arg3 = y のプラス範囲  
   arg4 = y のマイナス範囲
 
+
+<!-- 
 ![](img/rec.svg)
+-->
+
